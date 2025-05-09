@@ -1,0 +1,11 @@
+Terraform Setup
+install zip file
+extract
+move .exe file to the c:/terraform/
+add to the environment path
+
+and check "terraform -v"
+
+
+we can execute file using cmd or powershell
+with the help of "aws configure"
