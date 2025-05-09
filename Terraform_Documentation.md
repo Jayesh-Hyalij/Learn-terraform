@@ -61,14 +61,18 @@ This sets up your AWS access key, secret key, region, and output format.
 
 ## Additional Notes
 
+### What is Infrastructure as Code (IaC)?
+
+Infrastructure as Code (IaC) is a modern approach to managing and provisioning computing infrastructure through machine-readable configuration files, rather than manual hardware configuration or interactive configuration tools. IaC enables automation, consistency, and repeatability in infrastructure management, reducing human error and improving efficiency.
+
 ### 1. Methods Used Before Terraform
 
-Before Terraform, infrastructure provisioning and management were often done manually through cloud provider consoles or using custom scripts and configuration management tools like Ansible, Chef, or Puppet. These methods were typically more error-prone, less consistent, and harder to automate across multiple environments.
+Before Terraform, infrastructure provisioning and management were often performed manually through cloud provider consoles or by using custom scripts and configuration management tools such as Ansible, Chef, or Puppet. These traditional methods were more prone to errors, less consistent, and difficult to scale or automate across multiple environments.
 
-### 2. Why Terraform
+### 2. Why Use Terraform
 
-Terraform is widely used because it provides a declarative approach to infrastructure as code, enabling consistent and repeatable infrastructure provisioning. It supports multi-cloud environments, has a large and active community, and integrates well with various tools and services. Terraform's state management and plan/apply workflow help prevent configuration drift and allow safe infrastructure changes.
+Terraform is a popular IaC tool because it offers a declarative configuration language that allows users to define infrastructure in a clear and concise manner. It supports multi-cloud and hybrid cloud environments, has a large and active community, and integrates seamlessly with various tools and services. Terraform's state management and plan/apply workflow help prevent configuration drift, enabling safe and predictable infrastructure changes.
 
 ### 3. Cloud Provider Support
 
-Terraform supports a wide range of cloud providers including AWS, Azure, Google Cloud Platform, and many others through its provider ecosystem. While it covers most major cloud providers, it also supports numerous third-party services and on-premises solutions, making it a versatile tool for managing infrastructure across diverse environments.
+Terraform supports a broad range of cloud providers including AWS, Microsoft Azure, Google Cloud Platform, and many others through its extensive provider ecosystem. In addition to major cloud platforms, Terraform also supports numerous third-party services and on-premises solutions, making it a versatile and comprehensive tool for managing infrastructure across diverse environments.
