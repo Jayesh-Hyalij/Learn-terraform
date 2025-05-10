@@ -84,6 +84,12 @@ git commit -m "Initial commit"
 ```
 Saves the changes in your local repository with a message.
 
+### ✅ Shortcut: Commit and Add in One Command
+```bash
+git commit -am "commit message"
+```
+This command stages all modified and deleted files and commits them with the provided message in one step. Note that new untracked files still need to be added with `git add`.
+
 ### ✅ Step 5: Create a New Repository on GitHub
 - Go to [https://github.com](https://github.com)
 - Click **New Repository**

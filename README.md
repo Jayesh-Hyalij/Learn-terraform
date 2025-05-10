@@ -42,11 +42,11 @@ DevOps is a set of practices that combines software development (Dev) and IT ope
 # DevOps Tools to Learn (Serial-wise)
 
 1. Git - Version Control System  
-2. Jenkins - CI/CD Automation  
+2. Terraform - Infrastructure as Code  
 3. Docker - Containerization  
 4. Kubernetes - Container Orchestration  
 5. Ansible - Configuration Management  
-6. Terraform - Infrastructure as Code  
+6. Jenkins - CI/CD Automation
 7. Prometheus - Monitoring  
 8. Grafana - Visualization  
 9. ELK Stack (Elasticsearch, Logstash, Kibana) - Logging and Analytics  
