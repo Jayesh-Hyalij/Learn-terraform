@@ -69,4 +69,10 @@ A network topology refers to the arrangement or layout of different elements (li
 ### 🔹 How Network Topologies Work (Types Explained)
 
 | Topology   | Description                                                  | Pros                     | Cons                                          |
-| ---------- | ------------------------------------------------------------
+| ---------- | ------------------------------------------------------------ | ------------------------ | --------------------------------------------- |
+| **Bus**    | All devices share a single communication line (backbone).    | Simple, cheap            | Single point of failure, hard to scale        |
+| **Star**   | All devices connect to a central hub/switch.                 | Easy to manage, scalable | Central device failure affects entire network |
+| **Ring**   | Devices form a circular path; data travels in one direction. | Predictable data path    | One failure can disrupt the whole network     |
+| **Mesh**   | Every device is connected to every other device.             | Redundant, very reliable | Expensive, complex setup                      |
+| **Tree**   | A combination of star and bus topologies (hierarchical).     | Scalable, structured     | Complex, harder to configure                  |
+| **Hybrid** | Mix of two or more topologies.                               | Flexible, customizable   | Complex design and cost                       |
