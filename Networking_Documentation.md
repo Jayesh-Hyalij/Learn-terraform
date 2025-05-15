@@ -630,11 +630,11 @@ Switching is the process of forwarding data between devices within the same netw
 - **Example:** HR and IT users on the same switch but in separate VLANs
 - 🧪 Command Example
 
-```bash
-vlan 10
-name HR
-interface fa0/1
-switchport access vlan 10
+    ```bash
+    vlan 10
+    name HR
+    interface fa0/1
+    switchport access vlan 10
 
 ## 3. STP (Spanning Tree Protocol)
 
@@ -655,16 +655,16 @@ switchport access vlan 10
 
 ### 🛠️ Switch Configuration Example (Cisco)
 
-```bash
-enable
-configure terminal
-vlan 10
-name SALES
-exit
-interface fastethernet 0/1
-switchport mode access
-switchport access vlan 10
-exit
+    ```bash
+    enable
+    configure terminal
+    vlan 10
+    name SALES
+    exit
+    interface fastethernet 0/1
+    switchport mode access
+    switchport access vlan 10
+    exit
 
 ## 📘 Real-World Example
 
