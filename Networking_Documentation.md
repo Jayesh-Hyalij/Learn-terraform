@@ -519,3 +519,164 @@ You take `192.168.1.0/24` and subnet it into:
 - **Finance →** `192.168.1.96/28`  
 
 ➡️ **Efficient, secure, and clean segmentation!**
+
+## 7. Routing and Switching
+
+Routing and switching are two foundational concepts that enable communication within and across networks.
+
+---
+
+### 📘 A. Routing
+
+#### ✅ What Is Routing?
+
+Routing is the process of selecting paths in a network to send data from source to destination across different networks.
+
+- **Devices involved:** Routers  
+- **OSI Layer:** Network Layer (Layer 3)
+
+#### ✅ Why Routing? (Purpose)
+
+- Connects different networks (e.g., LAN to WAN)  
+- Chooses the best path for data delivery  
+- Enables internet connectivity  
+- Supports redundancy and failover
+
+#### ⚙️ How Routing Works
+
+1. Routers examine the destination IP address  
+2. Look into the routing table  
+3. Forward the packet to the next hop/router  
+4. Repeat until it reaches the final destination
+
+---
+
+#### 📌 Types of Routing
+
+| Type                | Description                                                                       |
+| ------------------- | --------------------------------------------------------------------------------- |
+| **Static Routing**  | Manually configured routes. Best for small, stable networks.                      |
+| **Dynamic Routing** | Routers exchange routing information via protocols. Auto-updates.                 |
+| **Default Routing** | All traffic with unknown destinations goes to one default route (e.g., internet). |
+
+---
+
+#### 📘 Common Routing Protocols
+
+| Protocol                               | Type            | Characteristics                 |
+| -------------------------------------- | --------------- | ------------------------------- |
+| **RIP (Routing Information Protocol)** | Distance Vector | Max 15 hops, slow convergence   |
+| **OSPF (Open Shortest Path First)**    | Link State      | Fast, scalable, hierarchical    |
+| **BGP (Border Gateway Protocol)**      | Path Vector     | Used on the internet, ISP-level |
+| **EIGRP (Cisco proprietary)**          | Hybrid          | Fast, advanced metrics          |
+
+---
+
+#### 🛠️ How to Use (Steps)
+
+1. Configure router interfaces with IP addresses  
+2. Add static routes:
+
+   ```bash
+   ip route [network] [mask] [next-hop IP]
+
+3. Or, enable dynamic routing protocols:
+    - Example for OSPF:
+
+    ```bash
+    router ospf 1
+    network 192.168.1.0 0.0.0.255 area 0
+
+### 📘 B. Switching
+
+#### ✅ What Is Switching?
+
+Switching is the process of forwarding data between devices within the same network using MAC addresses.
+
+- **Devices involved:** Switches  
+- **Operates at Layer:** 2 (Data Link)
+
+---
+
+#### ✅ Why Switching? (Purpose)
+
+- Connects devices like computers, printers, etc., in a LAN  
+- Efficient frame delivery using MAC addresses  
+- Reduces collisions via separate collision domains per port  
+- Supports VLANs for logical segmentation
+
+---
+
+#### ⚙️ How Switching Works
+
+1. A switch receives a frame  
+2. It reads the destination MAC address  
+3. Looks it up in its MAC address table (also called CAM table)  
+4. Forwards the frame to the correct port  
+5. If the MAC is unknown, it floods the frame to all ports except the source
+
+---
+
+### 📌 Switching Concepts
+
+#### 1. MAC Table
+
+- Maps MAC addresses to switch ports  
+- Built dynamically as devices communicate
+
+#### 2. VLANs (Virtual LANs)
+
+- Segment networks logically without separate hardware  
+- **Example:** HR and IT users on the same switch but in separate VLANs
+- 🧪 Command Example
+
+```bash
+vlan 10
+name HR
+interface fa0/1
+switchport access vlan 10
+
+## 3. STP (Spanning Tree Protocol)
+
+- Prevents loops in networks with redundant paths  
+- Ensures a loop-free topology by blocking redundant links  
+
+---
+
+## 4. Inter-VLAN Routing
+
+- Allows communication between VLANs  
+
+### Requires:
+- A **Layer 3 switch**, **or**
+- A **router-on-a-stick** configuration with sub-interfaces
+
+---
+
+### 🛠️ Switch Configuration Example (Cisco)
+
+```bash
+enable
+configure terminal
+vlan 10
+name SALES
+exit
+interface fastethernet 0/1
+switchport mode access
+switchport access vlan 10
+exit
+
+## 📘 Real-World Example
+
+You have:  
+- 3 departments: **HR**, **Sales**, **IT**  
+- 1 **switch**, 1 **router**
+
+---
+
+### ✅ Tasks:
+
+- **Create VLANs** for separation  
+- Use **router-on-a-stick** to allow **HR ↔ IT** communication  
+- Use **STP** to prevent loops in case of dual switches  
+- Add **static/dynamic routes** to connect to the internet
