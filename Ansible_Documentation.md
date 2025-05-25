@@ -61,7 +61,7 @@ pip install ansible
 
 ## Inventory
 
-A file that defines the hosts and groups of hosts on which commands, modules, and playbooks operate.
+Inventory is a file that defines the hosts and groups of hosts on which commands, modules, and playbooks operate.
 
 Example inventory file:
 
@@ -74,9 +74,9 @@ web2.example.com
 db1.example.com
 ```
 
-## Modules
+## Variables
 
-Predefined units of work that Ansible executes, such as managing packages, files, services, etc.
+Variables are used to manage differences between systems.
 
 ## Playbooks
 
@@ -97,9 +97,7 @@ Example playbook snippet:
 
 A way to organize playbooks and other files into reusable components.
 
-## Variables
-
-Used to manage differences between systems.
+        db1.example.com:
 
 ## Templates
 
