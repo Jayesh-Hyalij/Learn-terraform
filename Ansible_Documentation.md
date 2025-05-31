@@ -78,6 +78,63 @@ db1.example.com
 
 Variables are used to manage differences between systems.
 
+### Types of Variables
+
+- **Inventory Variables:** Defined in inventory files or host_vars/group_vars directories.
+- **Playbook Variables:** Defined within playbooks under `vars` or `vars_files`.
+- **Role Variables:** Defined in roles under `defaults` and `vars` directories.
+- **Extra Variables:** Passed at runtime using `--extra-vars` or `-e`.
+- **Facts:** Gathered automatically from managed hosts.
+
+### Defining Variables
+
+Variables can be defined in YAML syntax:
+
+```yaml
+vars:
+  http_port: 80
+  max_clients: 200
+```
+
+Or in inventory files:
+
+```ini
+[webservers]
+web1 ansible_host=192.168.1.10 http_port=8080
+```
+
+### Using Variables
+
+Variables are referenced using Jinja2 templating syntax:
+
+```yaml
+- name: Install package on port {{ http_port }}
+  apt:
+    name: apache2
+    state: present
+```
+
+### Variable Precedence
+
+Ansible applies variables based on precedence rules, with extra vars having the highest priority, followed by playbook vars, role vars, and inventory vars.
+
+### Examples
+
+Using variables in templates:
+
+```jinja2
+ServerName {{ ansible_hostname }}
+Listen {{ http_port }}
+```
+
+Passing extra vars at runtime:
+
+```bash
+ansible-playbook site.yml -e "http_port=8080"
+```
+Listen {{ http_port }}
+web1 ansible_host=192.168.1.10 http_port=8080
+
 ## Playbooks
 
 YAML files that define a series of tasks to be executed on hosts.
