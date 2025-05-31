@@ -1,100 +1,11 @@
-8. DNS and DHCP
+hypervisor
+1. Hypervisor (Bare Metal)
+Runs directly on the host's hardware without an underlying operating system.
+- It is installed directly onto the physical machine, just like an operating system (e.g., Windows or Linux).
+- It does not need another OS (like Windows, Ubuntu, etc.) to function.
+- It manages the hardware itself, including CPU, memory, storage, and network resources.
 
-Domain Name System (DNS): Structure and Resolution Process
+ Used in enterprise environments for high performance, low latency, and better resource management.
 
-DHCP: Dynamic IP Address Assignment
-
-9. Network Security
-
-Firewalls and Types
-
-IDS/IPS
-
-VPNs and Tunneling Protocols
-
-Network Access Control (NAC)
-
-Security Best Practices
-
-10. Wireless Networking
-
-Wi-Fi Standards (802.11a/b/g/n/ac/ax)
-
-Wireless Security: WPA, WPA2, WPA3
-
-SSID, Channels, Frequencies
-
-Site Survey and Troubleshooting
-
-11. Network Monitoring and Management
-
-SNMP
-
-Syslog
-
-NetFlow
-
-Monitoring Tools: Wireshark, Nagios, Zabbix, SolarWinds
-
-12. Cloud Networking
-
-Introduction to Cloud and Virtual Networking
-
-VPC (Virtual Private Cloud)
-
-Load Balancers
-
-Cloud Providers: AWS, Azure, GCP Networking Concepts
-
-13. Automation and Scripting in Networking
-
-Network Configuration Automation: Ansible, Puppet, Chef
-
-Scripting: Bash, Python for Network Tasks
-
-14. Common Network Protocols
-
-HTTP/HTTPS
-
-FTP/SFTP
-
-SSH, Telnet
-
-SNMP, ICMP
-
-SMTP, POP3, IMAP
-
-ARP, RARP
-
-15. Troubleshooting and Tools
-
-Ping, Traceroute, Netstat
-
-Nmap, Wireshark
-
-Packet Sniffing and Analysis
-
-Common Troubleshooting Steps and Methodologies
-
-16. Advanced Topics
-
-SDN (Software Defined Networking)
-
-MPLS
-
-Network Virtualization
-
-IPv6 Advanced Concepts
-
-Zero Trust Networking
-
-17. Certifications and Career Paths
-
-Cisco Certifications: CCNA, CCNP, CCIE
-
-CompTIA: Network+, Security+
-
-Juniper, Fortinet, Palo Alto
-
-Network Engineer, Administrator, Analyst Roles
-
+ 2. Hypervisor (Hosted)
+ Runs on top of a conventional operating system like any other application.
