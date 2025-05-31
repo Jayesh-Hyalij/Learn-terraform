@@ -58,6 +58,8 @@ docker --version
 - `docker rmi`: Remove an image.
 - `docker pull`: Download an image from a registry.
 - `docker push`: Upload an image to a registry.
+- `docker commit`: Create a new image from a container’s changes.
+- `docker tag`: Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE.
 
 ---
 
@@ -111,8 +113,9 @@ docker volume create my_volume
 - Use a volume in a container:
 
 ```bash
-docker run -d -v my_volume:/data nginx
+docker run -d -v /host/path/my_volume:/data nginx
 ```
+docker run -d -v /host/path/my_volume:/data nginx
 
 ---
 
