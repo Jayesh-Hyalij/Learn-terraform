@@ -86,32 +86,123 @@ Variables are used to manage differences between systems.
 - **Extra Variables:** Passed at runtime using `--extra-vars` or `-e`.
 - **Facts:** Gathered automatically from managed hosts.
 
-### Defining Variables
+### Detailed Variable Types and Usage
 
-Variables can be defined in YAML syntax:
+#### Local Variables
+Local variables are defined within a specific task or block and are only accessible within that scope.
+
+Example:
 
 ```yaml
-vars:
-  http_port: 80
-  max_clients: 200
+- name: Example play with local variable
+  hosts: all
+  tasks:
+    - name: Use local variable
+      vars:
+        local_var: "I am local"
+      debug:
+        msg: "{{ local_var }}"
 ```
 
-Or in inventory files:
+#### Global Variables
+Global variables are defined at the playbook level and accessible throughout the playbook.
+
+Example:
+
+```yaml
+- name: Example play with global variable
+  hosts: all
+  vars:
+    global_var: "I am global"
+  tasks:
+    - name: Use global variable
+      debug:
+        msg: "{{ global_var }}"
+```
+
+#### Host Variables
+Host variables are defined per host in inventory files or in host_vars directories and apply only to that host.
+
+Example inventory:
 
 ```ini
 [webservers]
 web1 ansible_host=192.168.1.10 http_port=8080
 ```
 
-### Using Variables
-
-Variables are referenced using Jinja2 templating syntax:
+Usage in playbook:
 
 ```yaml
-- name: Install package on port {{ http_port }}
-  apt:
-    name: apache2
-    state: present
+- hosts: webservers
+  tasks:
+    - name: Show host variable
+      debug:
+        msg: "Host IP is {{ ansible_host }} and port is {{ http_port }}"
+```
+
+#### Register Variables
+Register variables capture the output of a task and store it for later use.
+
+Example:
+
+```yaml
+- name: Run a command and register output
+  command: /bin/echo hello
+  register: command_output
+
+- name: Show registered output
+  debug:
+    msg: "The command output was: {{ command_output.stdout }}"
+```
+
+#### CLI Variables (Extra Vars)
+CLI variables are passed at runtime using the `--extra-vars` or `-e` option and have the highest precedence.
+
+Example command:
+
+```bash
+ansible-playbook site.yml -e "http_port=8080"
+```
+
+#### Prompt Variables
+Prompt variables ask the user for input at runtime using `vars_prompt`.
+
+Example:
+
+```yaml
+- name: Playbook with prompt
+  hosts: all
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter your username"
+      private: no
+  tasks:
+    - name: Show entered username
+      debug:
+        msg: "Username is {{ user_name }}"
+```
+
+#### Separate Variables (vars_files)
+Separate variables are stored in external files and included in playbooks using `vars_files`.
+
+Example vars file `vars.yml`:
+
+```yaml
+http_port: 8080
+max_clients: 200
+```
+
+Including in playbook:
+
+```yaml
+- name: Playbook with vars_files
+  hosts: all
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Use variable from vars_files
+      debug:
+        msg: "HTTP port is {{ http_port }}"
 ```
 
 ### Variable Precedence
@@ -132,6 +223,17 @@ Passing extra vars at runtime:
 ```bash
 ansible-playbook site.yml -e "http_port=8080"
 ```
+ansible-playbook site.yml -e "http_port=8080"
+Listen {{ http_port }}
+        msg: "HTTP port is {{ http_port }}"
+max_clients: 200
+        msg: "Username is {{ user_name }}"
+ansible-playbook site.yml -e "http_port=8080"
+    msg: "The command output was: {{ command_output.stdout }}"
+        msg: "Host IP is {{ ansible_host }} and port is {{ http_port }}"
+web1 ansible_host=192.168.1.10 http_port=8080
+        msg: "{{ global_var }}"
+        msg: "{{ local_var }}"
 Listen {{ http_port }}
 web1 ansible_host=192.168.1.10 http_port=8080
 
