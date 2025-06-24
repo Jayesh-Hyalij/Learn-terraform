@@ -1,372 +1,325 @@
-# Docker Documentation: From Scratch to Expert
 
-## Introduction to Docker
+# Docker Notes for Learning and Interview Preparation
 
-Docker is an open-source platform that automates the deployment, scaling, and management of applications using containerization. Containers package an application and its dependencies into a single, portable unit that can run consistently across different environments.
+## 1. Introduction and History
 
-### Why Use Docker?
-
-- Consistency across multiple development, testing, and production environments.
-- Lightweight and fast compared to traditional virtual machines.
-- Simplifies application deployment and scaling.
-- Enables microservices architecture and DevOps practices.
+Docker was introduced in March 2013 by Solomon Hykes as an internal project at dotCloud (a PaaS company). It was later open-sourced and has since become the industry standard for containerization. The Docker logo—a whale carrying shipping containers—symbolizes the ease of shipping code across environments, just like cargo is transported across seas.
 
 ---
 
-## Installation and Setup
+## 2. What is Docker?
 
-### Installing Docker
+Docker is an open-source platform designed to automate the deployment, scaling, and operation of applications using containers. Containers are lightweight, portable, and self-sufficient units that include everything needed to run a piece of software, including code, runtime, system tools, and libraries.
 
-- **Windows and macOS:** Download Docker Desktop from [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop) and follow the installation instructions.
-- **Linux:** Install Docker Engine using your distribution’s package manager. For example, on Ubuntu:
+---
+
+## 3. Why Do We Need Docker?
+
+* **Environment Consistency**: Runs the same in development, testing, and production.
+* **Portability**: Containers can run on any system that supports Docker.
+* **Isolation**: Applications run in their own containers without interfering with each other.
+* **Efficiency**: Uses fewer resources than traditional virtual machines.
+* **Fast Deployment**: Containers start quickly and simplify application delivery.
+
+---
+
+## 4. How Docker is Used in Industry
+
+* **Microservices**: Break large apps into smaller services for independent development.
+* **CI/CD Pipelines**: Automate testing and deployment of applications.
+* **Cloud-Native Applications**: Easily scalable and managed in cloud environments.
+* **Dev/Test Environments**: Replicate production-like environments for developers.
+* **Legacy App Modernization**: Run older apps in modern infrastructure using containers.
+
+---
+
+## 5. Operations Possible with Docker
+
+* Running containers
+* Managing container lifecycle
+* Creating, tagging, pushing, and pulling images
+* Networking between containers
+* Mounting volumes for persistent storage
+* Container inspection and logging
+* Exporting/importing containers and images
+
+---
+
+## 6. Docker Architecture
+
+### Components:
+
+* **Docker Client**: CLI tool that interacts with the Docker daemon.
+* **Docker Daemon**: Background service that manages Docker images, containers, networks, etc.
+* **Docker Images**: Immutable templates used to create containers.
+* **Docker Containers**: Lightweight and executable packages of software.
+* **Docker Registries**: Repositories (like Docker Hub) to store and share images.
+
+---
+
+## 7. Installation
+
+Refer to the official documentation: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+### Ubuntu Example:
 
 ```bash
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-```
-
-### Verify Installation
-
-Run the following command to verify Docker is installed correctly:
-
-```bash
-docker --version
+sudo apt update
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
 ```
 
 ---
 
-## Docker Architecture and Components
-
-- **Docker Engine:** The core component that creates and runs containers.
-- **Docker Images:** Read-only templates used to create containers.
-- **Docker Containers:** Running instances of Docker images.
-- **Docker Hub:** A cloud-based registry for sharing Docker images.
-- **Dockerfile:** A script containing instructions to build Docker images.
-- **Docker Compose:** A tool for defining and running multi-container Docker applications.
-- **Docker Swarm:** Native clustering and orchestration tool for Docker.
-
----
-
-## Basic Docker Commands
-
-- `docker run`: Run a container from an image.
-- `docker ps`: List running containers.
-- `docker ps -a`: List all containers.
-- `docker stop`: Stop a running container.
-- `docker rm`: Remove a container.
-- `docker images`: List images.
-- `docker rmi`: Remove an image.
-- `docker pull`: Download an image from a registry.
-- `docker push`: Upload an image to a registry.
-- `docker commit`: Create a new image from a container’s changes.
-- `docker tag`: Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE.
-
----
-
-## Working with Docker Images and Containers
-
-### Pulling an Image
+## 8. Getting Started with Docker
 
 ```bash
-docker pull nginx
-```
+# Create first container
+docker run hello-world
 
-### Running a Container
+# List containers
+docker ps           # running
+docker ps -a        # all
 
-```bash
-docker run -d -p 80:80 nginx
-```
-
-### Accessing a Container
-
-```bash
-docker exec -it <container_id> /bin/bash
-```
-
-### Stopping and Removing Containers
-
-```bash
-docker stop <container_id>
+# Remove container
 docker rm <container_id>
 ```
 
 ---
 
-## Docker Networking
-
-- **Bridge Network:** Default network for containers on a single host.
-- **Host Network:** Containers share the host’s network stack.
-- **Overlay Network:** Enables communication between containers across multiple Docker hosts.
-- **Macvlan Network:** Assigns a MAC address to a container, making it appear as a physical device on the network.
-
----
-
-## Docker Volumes and Storage
-
-- Volumes are used to persist data generated by and used by Docker containers.
-- Create a volume:
+## 9. Entering Inside a Running Container
 
 ```bash
-docker volume create my_volume
+docker exec -it <container_id> /bin/bash
 ```
 
-- Use a volume in a container:
+This command allows you to interact with a container’s shell.
+
+---
+
+## 10. Container Modes
+
+* **Interactive Mode (`-it`)**: Opens an interactive shell session.
 
 ```bash
-docker run -d -v /host/path/my_volume:/data nginx
+docker run -it ubuntu /bin/bash
 ```
-docker run -d -v /host/path/my_volume:/data nginx
+
+* **Detached Mode (`-d`)**: Runs the container in the background.
+
+```bash
+docker run -d nginx
+```
 
 ---
 
-## Docker Compose
+## 11. Container Inspect
 
-Docker Compose allows defining and running multi-container Docker applications using a YAML file.
+Used to retrieve detailed information about a container (e.g., configuration, network settings).
 
-### Example `docker-compose.yml`
-
-```yaml
-version: '3'
-services:
-  web:
-    image: nginx
-    ports:
-      - "80:80"
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+```bash
+docker inspect <container_id>
 ```
-
-### Commands
-
-- `docker-compose up`: Start services.
-- `docker-compose down`: Stop and remove services.
 
 ---
 
-## Dockerfile and Building Images
+## 12. Viewing Container Processes
 
-A Dockerfile is a text file with instructions to build a Docker image.
+```bash
+docker top <container_id>
+```
 
-### Example Dockerfile
+Displays running processes inside the container.
 
-```dockerfile
-FROM python:3.8-slim
+---
+
+## 13. Common Container Operations
+
+```bash
+# Port Mapping
+docker run -p 8080:80 nginx
+
+# Rename Container
+docker rename old_name new_name
+
+# Restart Container
+docker restart <container_id>
+
+# Exec Command
+docker exec -it <container_id> /bin/bash
+```
+
+---
+
+## 14. Other Useful Commands
+
+```bash
+# Attach to running container
+docker attach <container_id>
+
+# Kill a container
+docker kill <container_id>
+
+# Wait until container stops
+docker wait <container_id>
+
+# Pause/unpause processes in container
+docker pause <container_id>
+docker unpause <container_id>
+
+# Prune unused containers
+docker container prune
+
+# View exposed ports
+docker port <container_id>
+```
+
+---
+
+## 15. Working with Files in Containers
+
+```bash
+# View changes
+docker diff <container_id>
+
+# Copy file to container
+docker cp file.txt <container_id>:/app
+```
+
+---
+
+## 16. Export and Import Containers
+
+```bash
+# Export container filesystem
+docker export <container_id> > container.tar
+
+# Import container back
+docker import container.tar
+```
+
+---
+
+## 17. Creating Docker Image from Running Container
+
+```bash
+docker commit <container_id> my-custom-image
+```
+
+This creates a new image from the current state of a container.
+
+---
+
+## 18. Working with Docker Hub
+
+```bash
+# Tag image
+docker tag my-image username/my-image:latest
+
+# Login
+docker login
+
+# Push image
+docker push username/my-image:latest
+
+# Pull image
+docker pull username/my-image:latest
+```
+
+---
+
+## 19. Docker Image and Container Management
+
+```bash
+# Inspect image
+docker image inspect <image>
+
+# Remove image
+docker rmi <image_id>
+
+# List images
+docker images
+
+# View image history
+docker history <image>
+
+# View container logs
+docker logs <container_id>
+```
+
+---
+
+## 20. Save/Load vs Export/Import
+
+```bash
+# Save Docker image
+docker save -o my_image.tar my-image
+
+# Load Docker image
+docker load -i my_image.tar
+```
+
+**Differences:**
+
+* `docker save/load`: Used for images
+* `docker export/import`: Used for containers
+
+---
+
+## 21. Layered Architecture in Docker
+
+Each Docker image is composed of layers. Each instruction in a Dockerfile (e.g., `RUN`, `COPY`) creates a new layer. Layers are cached and shared across containers, reducing image size and improving efficiency.
+
+---
+
+## 22. Dockerfile Basics
+
+```Dockerfile
+# Basic Dockerfile Example
+LABEL maintainer="jayesh@example.com"
+RUN apt update && apt install nginx -y
+ENV APP_ENV=production
 WORKDIR /app
-COPY . /app
-RUN pip install -r requirements.txt
-CMD ["python", "app.py"]
-```
-
-### Build and Run
-
-```bash
-docker build -t my-python-app .
-docker run -d -p 5000:5000 my-python-app
 ```
 
 ---
 
-## Docker Swarm and Orchestration Basics
+## 23. ADD vs COPY vs USER
 
-Docker Swarm enables clustering and orchestration of Docker containers.
-
-- Initialize a swarm:
-
-```bash
-docker swarm init
+```Dockerfile
+COPY ./src /app
+ADD  https://example.com/file.zip /file.zip
+USER 1001
 ```
 
-- Deploy a service:
-
-```bash
-docker service create --name web -p 80:80 nginx
-```
-
-- List services:
-
-```bash
-docker service ls
-```
+**COPY** is used to copy local files, **ADD** can fetch from URLs and extract archives. **USER** sets the user under which the container runs.
 
 ---
 
-## Best Practices and Security
+## 24. CMD Instruction
 
-- Use official images or trusted sources.
-- Keep images small and efficient.
-- Regularly update images and containers.
-- Use multi-stage builds to optimize Dockerfiles.
-- Limit container privileges.
-- Scan images for vulnerabilities.
-- Use secrets management for sensitive data.
-
----
-
-## Advanced Topics and Resources
-
-- Docker Plugins and Extensions
-- Kubernetes Integration
-- CI/CD with Docker
-- Monitoring and Logging
-- Docker API and SDKs
-
-### Resources
-
-- Official Docker Documentation: [https://docs.docker.com/](https://docs.docker.com/)
-- Docker Hub: [https://hub.docker.com/](https://hub.docker.com/)
-- Docker GitHub Repository: [https://github.com/docker](https://github.com/docker)
-
----
-
-This documentation provides a comprehensive guide to learning Docker from beginner to expert level.
-
----
-
-## Additional Docker Notes
-
-### 1. What is Docker? History and Development
-
-Docker was developed by Solomon Hykes and released by Docker, Inc. in 2013. It revolutionized software development by introducing containerization technology that allows applications to run in isolated environments called containers.
-
-### 2. Why Do We Need Docker? Purpose
-
-- To simplify application deployment and ensure consistency across different environments (development, testing, production).
-- To enable faster and more efficient software delivery through containerization.
-- To support microservices architecture by isolating services in containers.
-- To reduce overhead compared to traditional virtual machines.
-
-### 3. How Does Docker Work?
-
-Docker uses OS-level virtualization to run multiple containers on a single host OS kernel. Each container shares the host OS kernel but runs in isolated user spaces. Docker Engine manages container lifecycle, images, networking, and storage.
-
-### 4. Docker and Microservices
-
-Docker is widely used to implement microservices architecture by packaging each microservice in its own container. This isolation allows independent deployment, scaling, and management of services.
-
-### 5. Problems Before Docker
-
-Before Docker, developers used virtual machines or manual environment setups, which were resource-heavy, slow to start, and prone to inconsistencies across environments.
-
-### 6. Diagram
-
-```
-+---------------------+
-|      Host OS        |
-| +-----------------+ |
-| | Docker Engine   | |
-| | +-------------+ | |
-| | | Container 1 | | |
-| | +-------------+ | |
-| | +-------------+ | |
-| | | Container 2 | | |
-| | +-------------+ | |
-| +-----------------+ |
-+---------------------+
+```Dockerfile
+CMD ["nginx", "-g", "daemon off;"]
 ```
 
-### 7. What is a Hypervisor?
-
-A hypervisor is software that creates and runs virtual machines by abstracting hardware resources. It enables hardware-level virtualization.
-
-### 8. Types of Hypervisors
-
-- Type 1 (Bare-metal): Runs directly on the host's hardware (e.g., VMware ESXi, Microsoft Hyper-V).
-- Type 2 (Hosted): Runs on top of a host OS (e.g., VirtualBox, VMware Workstation).
-
-### 9. Explanation of Types
-
-- Type 1 hypervisors offer better performance and security as they run directly on hardware.
-- Type 2 hypervisors are easier to set up but have more overhead due to running on a host OS.
-
-### 10. What is a Containerized Engine?
-
-A containerized engine (like Docker Engine) manages containers by leveraging OS-level virtualization, providing lightweight, fast, and portable environments.
-
-### 11. OS-level Virtualization
-
-OS-level virtualization allows multiple isolated user-space instances (containers) to run on a single OS kernel.
-
-### 12. Hardware-level Virtualization
-
-Hardware-level virtualization uses hypervisors to create full virtual machines with separate OS instances on shared hardware.
-
-### 13. Advantages and Disadvantages
-
-| Environment       | Advantages                              | Disadvantages                         |
-|-------------------|-------------------------------------|-------------------------------------|
-| Bare Metal        | High performance, direct hardware access | Less flexible, harder to manage     |
-| Virtualization    | Isolation, multiple OS instances     | Higher resource usage, slower startup |
-| Containerization  | Lightweight, fast startup, portable  | Less isolation than VMs, shared kernel |
-
-### 14. Docker Modes and Options
-
-- `-d` : Detached mode, runs container in background.
-- `-it`: Interactive mode with terminal.
-- `--rm`: Automatically remove container when it exits.
-- `-p`: Publish container ports to host.
-- `-v`: Mount volumes.
-- `--name`: Assign a name to the container.
-
-### 15. Practical: Running httpd on Docker
-
-```bash
-docker run -d -p 80:80 httpd
-```
-
-- httpd home path inside container: `/usr/local/apache2/`
-
-### 16. HTML Path in Nginx
-
-- Default HTML path inside nginx container: `/usr/share/nginx/html`
-
-### 17. Common Docker Commands
-
-- `docker run`: Run a container.
-- `docker ps`: List running containers.
-- `docker ps -a`: List all containers.
-- `docker stop`: Stop a container.
-- `docker rm`: Remove a container.
-- `docker images`: List images.
-- `docker rmi`: Remove an image.
-- `docker pull`: Download image.
-- `docker push`: Upload image.
-- `docker exec`: Run command in container.
-
-### 18. Common Docker Errors
-
-- "Cannot connect to the Docker daemon": Docker service not running or permission issues.
-- "Image not found": Image name or tag incorrect.
-- "Port already allocated": Port conflict on host.
-- "Permission denied": File or volume permission issues.
-
-### 19. Docker Volumes: What, Why, When
-
-Docker Volumes are a mechanism for persisting data generated and used by Docker containers. They allow data to exist beyond the lifecycle of a container, enabling data sharing and persistence.
-
-- Why we need volumes:
-  - To persist data beyond container restarts or removals.
-  - To share data between containers.
-  - To decouple storage from container lifecycle.
-  - To improve performance and manageability compared to storing data inside containers.
-
-- Types of volumes:
-  1. **Volume Mounts**: Managed by Docker and stored in a part of the host filesystem managed by Docker (`/var/lib/docker/volumes/` on Linux). These volumes are portable and can be easily backed up or migrated.
-     - Purpose: Provide persistent, managed storage independent of the host filesystem structure.
-     - When to use: For most persistent data needs where portability and Docker management are desired.
-  2. **Bind Mounts**: Map a file or directory on the host machine into the container. The host directory/file is directly accessed by the container.
-     - Purpose: Allow containers to use existing host files or directories.
-     - When to use: For development scenarios where live code or configuration files need to be shared, or when specific host paths must be accessed.
-
-- Choosing volume types:
-  - Use **Volume Mounts** for production data persistence and when you want Docker to manage the storage.
-  - Use **Bind Mounts** for development, debugging, or when you need direct access to host files.
-
-
-### 20. Monolithic vs Microservices
-
-- Monolithic: Single unified application.
-- Microservices: Application split into small, independent services communicating over network.
+Defines the default command executed when the container starts.
 
 ---
+
+## 25. EXPOSE and SSH Container Example
+
+```Dockerfile
+# Dockerfile Example to Enable SSH
+FROM ubuntu
+RUN apt update && apt install -y openssh-server
+RUN mkdir /var/run/sshd
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
+```
+
+This sets up a basic container running SSH on port 22.
+
+---
+
